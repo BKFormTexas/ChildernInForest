@@ -1,70 +1,67 @@
-﻿/*
- * - Name : Mart_ControlUI.cs
- * - Writer : 김명현
+/*
+ * - Name: Mart_ControlUI.cs
  * 
- * - Content
- * 배열로하여 남은 아이템 관리, 이 배열을 통해 랜덤으로 정답을 정하는 함수 및 아이템이 바뀌었는지 flag로 관리하는 스크립트
+ * - Content:
+ * Script for managing remaining items in an array, determining the correct answer randomly based on this array, and using a flag to keep track of item changes.
  * 
- * -Update Log-
- * 2021-07-08 : 제작 완료
- * 2021-07-09 : 코드 정리
- * 2021-07-20 : 인코딩형식 수정 및 주석 수정
+ * - Update Log -
+ * 2021-07-08: Production completed
+ * 2021-07-09: Code cleanup
+ * 2021-07-20: Modified encoding format and updated comments
  *                  
- * - Variable 
- * mba_MarketRandomItemArr : 각 아이템들이 이미 정답으로 나왔었는지 확인을 위한 용도의 배열
- * mn_RandomValue : 정답을 저장하는 변수
- * mb_ChangeItemFlag : 아이템이 바뀌었는지 확인하기위한 용도의 flag
- * n_i : for문
+ * - Variables:
+ * mba_MarketRandomItemArr: Array for managing the correctness of each item
+ * mn_RandomValue: Variable for storing the correct answer
+ * mb_ChangeItemFlag: Flag to check if the item has changed
+ * n_i: Counter for loops
  * 
- * -Function()
- * v_MartCheckRandomItemArr() : 정답배열에 num번째 값이 정답이 됬다고 설정해주는 함수
- * n_MartRandomItemValue() : 정답배열을 참고하여 한번도 정답되지 않은 아이템중 랜덤값을 설정해주는 함수
- * n_HowManyleftArr() : 게임이 완료되기 위해서 몇번의 정답이 더 남았는지를 반환해 주는 함수
- * v_ChangeFlagTrue() : mb_ChangeItemFlag 값 True로 설정
- * v_ChangeFlagFalse() : mb_ChangeItemFlag 값 False로 설정
- * b_checkFlag() : mb_ChangeItemFlag 값 반환
- * 
+ * Functions:
+ * v_MartCheckRandomItemArr(): Function to mark the 'num' element as a correct answer in the array
+ * n_MartRandomItemValue(): Function to set a random value for items that have never been the correct answer, based on the correctness array
+ * n_HowManyleftArr(): Function to return how many correct answers are left for the game to be completed
+ * v_ChangeFlagTrue(): Function to set 'mb_ChangeItemFlag' to True
+ * v_ChangeFlagFalse(): Function to set 'mb_ChangeItemFlag' to False
+ * b_checkFlag(): Function to return the value of 'mb_ChangeItemFlag'
  */
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mart_ControlUI : MonoBehaviour{
-    private bool[] mba_MarketRandomItemArr = new bool[6];                   // 정답 관리하는 배열
+public class Mart_ControlUI : MonoBehaviour {
+    private bool[] mba_MarketRandomItemArr = new bool[6]; // Array for managing correctness
     private int mn_RandomValue;
-
     private bool mb_ChangeItemFlag;
     
-    void Start(){
-        mb_ChangeItemFlag = false;                                          // Flag값 False로 초기화
+    void Start() {
+        mb_ChangeItemFlag = false; // Initialize the flag to False
    
-        for (int n_i = 0; n_i < 6; n_i++){                                  // 정답 배열 False로 초기화
+        for (int n_i = 0; n_i < 6; n_i++) { // Initialize the correctness array to False
             mba_MarketRandomItemArr[n_i] = false;
         }
     }
 
-    void Update(){
+    void Update() {
 
     }
 
     /// <summary>
-    /// 정답배열에 num번째 값이 정답이 됬다고 설정해주는 함수
+    /// Function to mark the 'num' element as a correct answer in the array
     /// </summary>
-    /// <param name="num">num번째 정답배열값 true 입력</param>
-    public void v_MartCheckRandomItemArr(int num){
+    /// <param name="num">The 'num' element in the correctness array is set to True</param>
+    public void v_MartCheckRandomItemArr(int num) {
         mba_MarketRandomItemArr[num] = true;
-        Debug.Log(num + "번째 배열 트루값 입력");
+        Debug.Log("Setting True for element " + num + " in the array");
     }
 
     /// <summary>
-    /// 정답배열을 참고하여 한번도 정답되지 않은 아이템중 랜덤값을 설정해주는 함수
+    /// Function to set a random value for items that have never been the correct answer, based on the correctness array
     /// </summary>
-    /// <returns>int 랜덤값</returns>
-    public int n_MartRandomItemValue(){
-        while (true){
+    /// <returns>int: A random value</returns>
+    public int n_MartRandomItemValue() {
+        while (true) {
             mn_RandomValue = Random.Range(0, 6);
-            if (mba_MarketRandomItemArr[mn_RandomValue] == false){
+            if (mba_MarketRandomItemArr[mn_RandomValue] == false) {
                 break;
             }
         }
@@ -72,45 +69,45 @@ public class Mart_ControlUI : MonoBehaviour{
     }
 
     /// <summary>
-    /// 게임이 완료되기 위해서 몇번의 정답이 더 남았는지를 반환해 주는 함수
+    /// Function to return how many correct answers are left for the game to be completed
     /// </summary>
-    /// <returns>int 남은 횟수</returns>
-    public int n_HowManyleftArr(){
+    /// <returns>int: Number of remaining correct answers</returns>
+    public int n_HowManyleftArr() {
         int n_left = 0;
-        for (int n_i = 0; n_i < 6; n_i++){
-            if (mba_MarketRandomItemArr[n_i] == true){
-                Debug.Log(n_i + "번째 배열값 true");
+        for (int n_i = 0; n_i < 6; n_i++) {
+            if (mba_MarketRandomItemArr[n_i] == true) {
+                Debug.Log("Value of element " + n_i + " is true");
             }
-            if (mba_MarketRandomItemArr[n_i] == false){
-                Debug.Log(n_i + "번째 배열값 false");
+            if (mba_MarketRandomItemArr[n_i] == false) {
+                Debug.Log("Value of element " + n_i + " is false");
                 n_left += 1;
             }
         }
-        Debug.Log(n_left + "번 남았습니다.");
+        Debug.Log("Remaining items: " + n_left);
         return n_left;
     }
 
     /// <summary>
-    /// mb_ChangeItemFlag 값 True로 설정
+    /// Function to set 'mb_ChangeItemFlag' to True
     /// </summary>
-    public void v_ChangeFlagTrue(){
+    public void v_ChangeFlagTrue() {
         mb_ChangeItemFlag = true;
-        Debug.Log("Flag값 True");
+        Debug.Log("Flag set to True");
     }
 
     /// <summary>
-    /// mb_ChangeItemFlag 값 False로 설정
+    /// Function to set 'mb_ChangeItemFlag' to False
     /// </summary>
-    public void v_ChangeFlagFalse(){
-        mb_ChangeItemFlag = false ;
-        Debug.Log("Flag값 False");
+    public void v_ChangeFlagFalse() {
+        mb_ChangeItemFlag = false;
+        Debug.Log("Flag set to False");
     }
 
     /// <summary>
-    /// mb_ChangeItemFlag 값 반환해주는 함수
+    /// Function to return the value of 'mb_ChangeItemFlag'
     /// </summary>
-    /// <returns>Flag값</returns>
-    public bool b_checkFlag(){
+    /// <returns>Flag value</returns>
+    public bool b_checkFlag() {
         return mb_ChangeItemFlag;
     }
 }
