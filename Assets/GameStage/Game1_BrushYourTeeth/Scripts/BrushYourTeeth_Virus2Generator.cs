@@ -1,32 +1,30 @@
-﻿/*
- * - Name : BrushYourTeeth_Virus1Generator.cs
- * - Writer : 김명현
+/*
+ * - Name: BrushYourTeeth_Virus2Generator.cs
  * 
- * - Content : 
- * 세균1 자동생성을 위한 스크립트
- * 생성될 세균수 설정
- * 어느위치에 세균이 생성되게할것인 설정
+ * - Content: 
+ * Script for automatic generation of Virus 2.
+ * Set the number of viruses to be created.
+ * Set where viruses will be generated.
  *            
- *            
- * -수정 기록-
- * 2021-07-07 : 제작 완료
- * 2021-07-16 : 파일 인코딩 수정
+ * - Modification History
+ * 2021-07-07: Production completed
+ * 2021-07-16: File encoding fixed
  *                  
  * 
- * - Variable 
- * mg_Virus2_Prefab : 프리팹 연결을 위한 오브젝트
- * mf_span : 생성 주기
- * mf_delta : 시간이 얼마나 흘렀는지 확인을 위한 시간을 재는 변수
- * mn_mn_virus2_cnt : 총 생성된 바이러스 카운트를 위한 변수
- * ma2f_Virus2Position : 바이러스 생성위치를 저장하는 2차원 배열
+ * - Variables 
+ * mg_Virus2_Prefab: Object for prefab connection
+ * mf_span: Generation interval for Virus 2 (modify to change the generation interval in seconds)
+ * mf_delta: Time tracking variable
+ * mn_virus2_cnt: Variable for counting the total generated viruses
+ * ma2f_Virus2Position: 2D array for storing virus generation positions
  * 
- * n_i : for문 카운트를 위한 변수
- * n_j : 상동
+ * n_i: Variable for loop count
+ * n_j: Same as n_i
  * 
- * n_Virus1PositionX : 바이러스2 위치 X값
- * n_Virus1PositionY :바이러스2 위치 Y값
+ * n_Virus2PositionX: X position of Virus 2
+ * n_Virus2PositionY: Y position of Virus 2
  * 
- * g_GenerateVirus2 : 프리팹을 통해 생성하는 바이러스2 오브젝트
+ * g_GenerateVirus2: Virus 2 object generated using the prefab
  * 
  * 
  * 
@@ -36,12 +34,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class BrushYourTeeth_Virus2Generator : MonoBehaviour
 {
     public GameObject mg_Virus2_Prefab;
 
-    float mf_span = 4.0f;                                                       // 세균2 생성주기 변경을 원할시 이 부분 수정 (단위 : 초)
+    float mf_span = 4.0f; // Modify this part to change the generation interval of Virus 2 (in seconds)
 
     float mf_delta = 0;
     int mn_virus2_cnt = 1;
@@ -50,9 +47,9 @@ public class BrushYourTeeth_Virus2Generator : MonoBehaviour
 
     void Start()
     {
-        while (true)                                                            // 세균 생성위치를 설정하는 루프문
+        while (true) // Loop for setting virus generation positions
         {
-            for (int n_i = 0; n_i < 5; n_i++)                                   // 세균을 생성할 위치를 ma2f_Virus1Position배열에 저장
+            for (int n_i = 0; n_i < 5; n_i++) // Store the positions where viruses will be generated in the ma2f_Virus2Position array
             {
                 int n_Virus2PositionX = Random.Range(-4, 4);
                 float n_Virus2PositionY = Random.Range(-0.6f, -3.3f);
@@ -60,7 +57,7 @@ public class BrushYourTeeth_Virus2Generator : MonoBehaviour
                 ma2f_Virus2Position[n_i, 0] = n_Virus2PositionX;
                 ma2f_Virus2Position[n_i, 1] = n_Virus2PositionY;
             }
-            for (int n_i = 0; n_i < 4; n_i++)                                   // 세균이 중복된 위치에 생성되지 않도록 하기위한 루프문
+            for (int n_i = 0; n_i < 4; n_i++) // Loop to ensure viruses are not generated at the same location
             {
                 for (int n_j = 1; n_j < 5; n_j++)
                 {
@@ -82,23 +79,21 @@ public class BrushYourTeeth_Virus2Generator : MonoBehaviour
             }
             break;
         }
-        GameObject g_GenerateVirus1 = Instantiate(mg_Virus2_Prefab) as GameObject;  // 첫번째 세균2 생성
-        g_GenerateVirus1.transform.position = new Vector3(ma2f_Virus2Position[0, 0], ma2f_Virus2Position[0, 1], 0);
-        Debug.Log("바이러스2 1번째 위치 : " + ma2f_Virus2Position[0, 0] + " " + ma2f_Virus2Position[0, 1]);
-
-
+        GameObject g_GenerateVirus2 = Instantiate(mg_Virus2_Prefab) as GameObject; // Generate the first Virus 2
+        g_GenerateVirus2.transform.position = new Vector3(ma2f_Virus2Position[0, 0], ma2f_Virus2Position[0, 1], 0);
+        Debug.Log("Position of generated Virus 2 1st: " + ma2f_Virus2Position[0, 0] + " " + ma2f_Virus2Position[0, 1]);
     }
 
     void Update()
     {
         this.mf_delta += Time.deltaTime;
 
-        if (this.mf_delta > this.mf_span && mn_virus2_cnt < 5)                      // 생성할 세균2 개수를 변경하려면 이 부분 수정 (5), 설정한 주기마다 세균2를 생성하는 루프문
+        if (this.mf_delta > this.mf_span && mn_virus2_cnt < 5) // Modify the number of Virus 2 to be created here (5)
         {
             this.mf_delta = 0;
-            GameObject g_GenerateVirus1 = Instantiate(mg_Virus2_Prefab) as GameObject;
-            g_GenerateVirus1.transform.position = new Vector3(ma2f_Virus2Position[mn_virus2_cnt, 0], ma2f_Virus2Position[mn_virus2_cnt, 1], 0);
-            Debug.Log("바이러스2 " + (mn_virus2_cnt + 1) + "번째 위치 : " + ma2f_Virus2Position[mn_virus2_cnt, 0] + " " + ma2f_Virus2Position[mn_virus2_cnt, 1]);
+            GameObject g_GenerateVirus2 = Instantiate(mg_Virus2_Prefab) as GameObject;
+            g_GenerateVirus2.transform.position = new Vector3(ma2f_Virus2Position[mn_virus2_cnt, 0], ma2f_Virus2Position[mn_virus2_cnt, 1], 0);
+            Debug.Log("Virus 2 " + (mn_virus2_cnt + 1) + "th position: " + ma2f_Virus2Position[mn_virus2_cnt, 0] + " " + ma2f_Virus2Position[mn_virus2_cnt, 1]); // Generate Virus 2 from 2 onwards
             mn_virus2_cnt++;
         }
 
