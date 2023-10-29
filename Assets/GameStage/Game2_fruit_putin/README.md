@@ -45,5 +45,3 @@
      - Change the value of mn_countFruits in the inspector window of the object to which the scene's InitializeStage class is applied.
 
 ***
--------------
-## README.md Change history
