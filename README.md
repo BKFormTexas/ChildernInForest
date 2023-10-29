@@ -67,9 +67,6 @@
 >
 > > <img src = "https://user-images.githubusercontent.com/69896751/126107498-3f1366d8-7290-4c0d-9107-26cc2f944d8a.jpeg" width="200" height="100" text="Text to Speech">   
 ------------
-## Project Plan
-> <img src = "https://user-images.githubusercontent.com/69896751/126107697-32ddeea5-992c-4e43-9795-e2f2dbc044f9.png" width="500" height="220">
-------------
 ## Project Role
 > **Developement** : Byungkwon Lee
 >
