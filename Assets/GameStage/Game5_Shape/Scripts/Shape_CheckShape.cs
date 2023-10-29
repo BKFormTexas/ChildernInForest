@@ -1,19 +1,18 @@
 /*
-  * - Name : Shape_CheckShape.cs
-  * - Writer : 이윤교
-  * - Content : 도형을 다 맞췄는지 확인하고 end 씬 불러오는 스크립트
+  * - Name: Shape_CheckShape.cs
+  * - Content: Script to check if all shapes have been matched and load the end scene
   * 
   * - HISTORY
-  * 2021-07-06 : 초기 개발
-  * 2021-07-19 : 파일 인코딩 수정 및 주석 처리
-  * 2021-07-27 : 주석 처리 수정
+  * 2021-07-06: Initial development
+  * 2021-07-19: File encoding modification and commenting
+  * 2021-07-27: Commenting modification
   *
-  * <Variable>
-  * vm : 음성 TTS를 처리하는 오브젝트 연결 
-  * mb_checkVoice : 스크립트 음성이 한번만 실행되게 하기 위한 체크하는 변수
+  * <Variables>
+  * vm: Object for processing Text-to-Speech (TTS) for voice
+  * mb_checkVoice: Variable to check if the script voice has been played once
   *
   * <Function>
-  * v_EndStage() : end씬 불러오기
+  * v_EndStage(): Load the end scene
   */
 
 using System.Collections;
@@ -25,22 +24,23 @@ public class Shape_CheckShape : MonoBehaviour{
     VoiceManager vm;
     bool mb_checkVoice = false;
 
-    //초기설정
+    // Initialization
     void Start(){
         this.vm = GameObject.Find("VoiceManager").GetComponent<VoiceManager>();
     }
+
     void Update(){
-        if(transform.childCount <= 4){          // 도형을 다 맞추면
-            if(!mb_checkVoice){                 //스크립트 음성이 한번도 나온적이 없다면
-                vm.playVoice(0);                //스크립트 음성 재생
-                mb_checkVoice = true;           //스크립트 음성 재생 체크
+        if(transform.childCount <= 4){          // When all shapes are matched
+            if(!mb_checkVoice){                 // If the script voice hasn't been played yet
+                vm.playVoice(0);                // Play the script voice
+                mb_checkVoice = true;           // Mark that the script voice has been played
             }
-            Destroy(transform.Find("arrow"));   //arrow 오브젝트 없애기
-            Invoke("v_EndStage", 2f);           //2초 후 v_Endstage함수 호출
+            Destroy(transform.Find("arrow"));   // Remove the arrow object
+            Invoke("v_EndStage", 2f);           // Call the v_Endstage function after 2 seconds
         }
     }
 
-    //end씬 불러오는 함수
+    // Function to load the end scene
     void v_EndStage(){
         SceneManager.LoadScene("end_scene"); 
     }
