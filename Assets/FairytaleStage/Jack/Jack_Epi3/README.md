@@ -1,65 +1,63 @@
-# 잭과콩나무 - Episode3
+# Jack and the Beanstalk - Episode 3
 ***
- - 작성 및 제작 : 김명현
- - 언어 : C#
+  - Language: C#
 ***
- - Update Log
-     - 21.07.13 : 코드 작성완료
-     - 21.07.16 : 이벤트시 화살표로 방향성 추가, 씬 연결
-     - 21.07.19 : 해상도 변경 및 스크립트 크기 수정
-     - 21.07.26 : 효과음 추가
-     - 21.07.28 : 스크립트 최적화 및 일부기능 모듈화
+  -Update Log
+      - 21.07.13: Code writing completed
+      - 21.07.16: Add direction with arrows during events, connect scenes
+      - 21.07.19: Resolution change and script size modification
+      - 21.07.26: Added sound effect
+      - 21.07.28: Script optimization and modularization of some functions
 ***
- - 구동화면 및 내용
+  - Running screen and contents
 
-![잭과콩나무 episode3](https://user-images.githubusercontent.com/37494407/126118568-05882a3c-5841-4e20-9f0b-4c33d248caa7.png)
+![Jack and the Beanstalk episode 3](https://user-images.githubusercontent.com/37494407/126118568-05882a3c-5841-4e20-9f0b-4c33d248caa7.png)
 
 
-    - 에피소드3 첫 구동화면이다.
-    - 화면을 터치하며 스토리를 이어간다.
+     - This is the first screen of Episode 3.
+     - Touch the screen to continue the story.
     
-![잭과콩나무 episode3 이벤트1](https://user-images.githubusercontent.com/37494407/126121823-e65947b9-6944-4ca1-a09d-18888a2e80ce.png)
+![Jack and the Beanstalk episode 3 event 1](https://user-images.githubusercontent.com/37494407/126121823-e65947b9-6944-4ca1-a09d-18888a2e80ce.png)
 
-    - 이벤트화면
-    - 무엇을 드래그 해야 되는지 화살표를 통해 가르켜준다.
+     - Event screen
+     - Arrows indicate what to drag.
     
- ![잭과콩나무 episode3 이벤트2](https://user-images.githubusercontent.com/37494407/126121935-bcfb0c8b-bf70-4b31-b10e-069c00c66072.png)
+  ![Jack and the Beanstalk episode 3 event 2](https://user-images.githubusercontent.com/37494407/126121935-bcfb0c8b-bf70-4b31-b10e-069c00c66072.png)
 
-    - 오브젝트 드래그시 기존 화살표가 사라지고 누구한테 드래그를 해야되는지 나타낸다.
-    
+     - When dragging an object, the existing arrow disappears and indicates to whom the object should be dragged.
     
     
+    
 
 ***
 
 
-- Jack (Episode3) 구성 정보
-  - Image
-    - 씬에 사용되는 이미지들 저장
-  - Scripts
-    - Jack3_Bean.cs : 콩 오브젝트에 대한 스크립트, 드래그 해제 시 원래 위치로 돌아가게끔 설정
-    - Jack3_Cow.cs : 소 오브젝트에 대한 스크립트, 드래그 해제 시 원래 위치로 돌아가게끔 설정
-    - Jack3_EventController.cs : 메인 스크립트, 이벤트를 설정하고 진행하는 스크립트
-    - Jack3_GrandFather.cs : 할아버지 오브젝트에 대한 스크립트, 할아버지 오브젝트에 대한 충돌 처리 등을 담당하는 스크립트
-    - Jack3_Jack.cs : 잭에 대한 스크립트, 잭 오브젝트에 대한 충돌 처리 등을 담당하는 스크립트
-  - Jack_Epi3.unity : 씬 파일
+- Jack (Episode 3) composition information
+   -Image
+     - Save images used in the scene
+   -Scripts
+     - Jack3_Bean.cs: Script for bean object, set to return to original position when dragging is released
+     - Jack3_Cow.cs: Script for cow objects, set to return to original position when dragging is released
+     - Jack3_EventController.cs: Main script, script that sets and processes events
+     - Jack3_GrandFather.cs: Script for the grandfather object, script responsible for handling collisions on the grandfather object, etc.
+     - Jack3_Jack.cs: Script for Jack, script responsible for handling collisions on Jack objects, etc.
+   - Jack_Epi3.unity: Scene file
 
 ***
 
- - 참고사항
+  - Note
 
-1. 대사를 수정하고싶은 경우
+1. If you want to edit the lines
 
-    - Jack3_ㅁㅁㅁㅁScript.cs 안의 ms_ScriptText 변수에 대사를 작성해준다. 대사간 구분자는 @로 작성하였으니 문장이끝나는부분에 @를 작성해준다.
-    - ㅁㅁㅁㅁ는 스크립트의 주체에따라 들어가 설정해주면 된다.
+     - Write the dialogue in the ms_ScriptText variable in Jack3_ㅁㅁㅁㅁScript.cs. The separator between lines is @, so write @ at the end of the sentence.
+     - You can enter and set ㅁㅁㅁㅁ according to the subject of the script.
 
-2. 스크립트를 띄우는 방법
+2. How to launch a script
 
-    - 메인 스크립트인 Jack3_EventController.cs 에서 각 스크립트를 오브젝트를 통해 연결을하고 v_NextScript() 함수를 작동하면 다음 스크립트가 나타난다.
+     - When you connect each script through an object in the main script, Jack3_EventController.cs, and run the v_NextScript() function, the next script appears.
 
-3. 대화를 지우는 방법
+3. How to delete a conversation
 
-    - v_NoneScript()함수를 사용하면 된다.
+     - You can use the v_NoneScript() function.
 
 ***
-
