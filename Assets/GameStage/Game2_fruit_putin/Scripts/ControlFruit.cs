@@ -1,30 +1,29 @@
 /*
- * - Name : ControlFruit.cs
- * - Writer : 최대준
- * - Content : ControlFruit 클래스에서는 이름에서와 같이 생성된 Fruit 프리팹을 컨트롤하기 위한 클래스이다. Fruit 프리팹을 사용자가 드래그하면 Fruit가 따라오고, tts 음성 출력을 위한 Fruit의 id를 가지고 있다.
- * - Where the code is applied : /Asset/fruit_putin/Prefab/Fruit
+ * - Name: ControlFruit.cs
+ * - Content: The ControlFruit class is used to control the Fruit prefab. When users drag the Fruit, it follows their movement, and it contains an ID for TTS voice output.
+ * - Where the code is applied: /Assets/fruit_putin/Prefab/Fruit
  * - History -
- * 2021-07-19 : 제작 완료
- * 2021-07-20 : 주석 처리
- * 2021-07-23 : SoundManager 추가.
- * 2021-07-27 : 피드백에 의한 주석 변경.
- * 2021-07-28 : 생성하자마자 파괴될때 mvm_voiceManager가 null값일 경우의 예외처리.
+ * 2021-07-19: Production completed
+ * 2021-07-20: Commented
+ * 2021-07-23: Added SoundManager.
+ * 2021-07-27: Updated comments based on feedback.
+ * 2021-07-28: Exception handling added for cases where mvm_voiceManager is null upon immediate destruction.
  *
- * - ControlFruit Member Variable 
+ * - ControlFruit Member Variables 
  *
- * mvm_voiceManager : 이 클래스를 이용하여 Fruit 프리팹에 맞는 음성을 출력할 수 있게 된다.
- * mn_fruitId : Fruit 프리팹의 종류를 나타내주는 id 변수이다.
- * mv2_remembPos : Fruit 프리팹이 처음 생성된 위치를 저장하는 변수이다.
- * mb_checkClickOnce : Fruit 프리팹이 드래그중인지 아닌지를 판단하는 변수이다.
- * msm_soundManager : 효과음 관리하는 클래스이다.
+ * mvm_voiceManager: This class allows TTS voice output corresponding to the Fruit prefab.
+ * mn_fruitId: An ID variable representing the type of Fruit prefab.
+ * mv2_remembPos: Stores the initial position of the Fruit prefab.
+ * mb_checkClickOnce: Determines whether the Fruit prefab is being dragged.
+ * msm_soundManager: Manages sound effects.
  * 
- * - ControlFruit Member Function
+ * - ControlFruit Member Functions
  *
- * Start() : Fruit 게임 오브젝트가 생성될 때 최초로 실행되는 함수로, VoiceManager 클래스의 인스턴스를 가지고 있게 된다.
- * Update() : 오브젝트가 씬에 생성되면 계속 호출되는 함수로, 계속 처음에 생성된 위치로 가려고 하게 하였다. 이는 과일의 캐릭터가 억지로 플레이어에게 잡힌거처럼 연출하기 위해서이다.
- * OnMouseDrag() : 플레이어가 과일을 드래그할때 호출되는 함수로 마우스 위치로 Fruit 프리팹을 옮기게 하여 끌려가는 행위를 표현하였다.
- * OnMouseUp() : 플레이어가 드래그에서 손을 뗐을 때 mb_checkClickOnce를 true로 만들어 계속 음성이 출력되지 않고 한번만 출력이 되게 예외처리를 해주었다.
- * OnTriggerEnter2D(Collider2D cCollideObject) : 유니티의 collider 컴포넌트를 주었을 때 호출되는 함수로, 이름과 같이 collider들이 부딪혔을 때 호출되어 함수안에 어떤 작업을 할지를 적어주는 함수로, 나는 부딪혔을 때, 현재 이 스크립트를 가진 오브젝트인 Fruit 프리팹이 사라지게 하고, 과일 종류에 따른 영어 음성을 출력하도록 하였다.
+ * Start(): Executed when the Fruit game object is created, initializes the VoiceManager instance.
+ * Update(): Continuously moves the object back to its initial position when it's created in the scene. This is done to create the illusion that the fruit character is forcibly caught by the player.
+ * OnMouseDrag(): Called when the player drags the fruit. It outputs the name of the fruit as voice.
+ * OnMouseUp(): Executed when the player releases the drag, it sets mb_checkClickOnce to true to ensure the voice is output only once.
+ * OnTriggerEnter2D(Collider2D cCollideObject): Called when Unity's collider component is given. It is invoked when collisions occur and defines what actions to take when that happens. In this case, it makes the Fruit prefab disappear upon collision, and outputs English voice corresponding to the type of fruit.
  * 
  */
 
@@ -32,7 +31,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Fruit 프리팹의 상태, 행동들을 컨트롤하는 스크립트 클래스이다.
+// Script class that controls the state and actions of the Fruit prefab.
 public class ControlFruit : MonoBehaviour {
     private VoiceManager mvm_voiceManager;
     private SoundManager msm_soundManager;
@@ -40,48 +39,47 @@ public class ControlFruit : MonoBehaviour {
     private Vector2 mv2_remembPos;
     private bool mb_checkClickOnce = false;
 
-    // VoiceManager 클래스를 초기화하고, 처음 초기화 위치를 저장한다. (다시 돌아가기 위해서)
+    // Initialize the VoiceManager class and store the initial position (for going back).
     void Start() {
         mvm_voiceManager = GameObject.Find("VoiceManager").GetComponent<VoiceManager>();
         msm_soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         mv2_remembPos = gameObject.transform.position;
     }
     
-    // 초기화한 자리로 이동하도록 하였다. (드래그해서 다른 위치로 옮기면, 서서히 다시 처음 위치로 돌아가도록 한 것이다.)
+    // Move back to the initialized position. This is to gradually return to the initial position, as if the fruit character is being caught by the player.
     void Update() {
         this.transform.position = Vector3.MoveTowards(this.transform.position, mv2_remembPos, 2f * Time.deltaTime);
     }
 
-    // 드래그시에 호출되는 함수로, 드래그할 시에 무슨 과일인지 이름을 음성으로 출력하게 하였다.
+    // Called when dragging, outputs the name of the fruit as voice. Includes a flag to prevent repeated voice output during dragging.
     private void OnMouseDrag() {
         if(!mb_checkClickOnce) {
-            mvm_voiceManager.playVoice(mn_fruitId); //한국 보이스 출력
+            mvm_voiceManager.playVoice(mn_fruitId); // Output Korean voice
             msm_soundManager.playSound(0);
             mb_checkClickOnce = true;
         }
-        Vector2 v2_checkMousePos = new Vector2(Input.mousePosition.x,
-        Input.mousePosition.y);
+        Vector2 v2_checkMousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         Vector2 v2_checkworldObjPos = Camera.main.ScreenToWorldPoint(v2_checkMousePos);
         this.transform.position = v2_checkworldObjPos;
     }
 
-    // 드래그시에 호출되는 함수는 드래그시에는 계속 호출되므로 음성 또한 계속 출력되어서, 이러한 예외처리를 두었다.
+    // When called during dragging, it is repeatedly called, leading to continuous voice output. This exception handling is added to prevent that.
     void OnMouseUp() {
         msm_soundManager.playSound(1);
         msm_soundManager.playSound(2);
         mb_checkClickOnce = false;
     }
 
-    // PutFruits_initializeStage라는 클래스에서 총 이 Fruit 프리팹들을 생성할 때 이 프리팹이 어떤 종류의 과일인지를 이 함수를 통해 멤버 변수 mn_fruitId로 넣게 된다.
+    // The PutFruits_initializeStage class assigns the type of fruit for all these Fruit prefabs by using this function to set the mn_fruitId member variable.
     public void setFruitId(int nId) {
         mn_fruitId = nId;
     }
 
-    // Fruit와 Basket의 충돌이 일어났을 때 호출되는 함수로, 여기서는 Fruit를 사라지게하고, 영어로 된 음성을 출력하도록 하였다.
+    // Called when Fruit and Basket collide, this function handles actions to take upon collision, such as making the Fruit disappear and playing the corresponding English voice.
     void OnTriggerEnter2D(Collider2D cCollideObject) {
         if (cCollideObject.tag == "PutFruitInBasket") {
             if(mvm_voiceManager != null)
-                mvm_voiceManager.playVoice(mn_fruitId+1); //영어
+                mvm_voiceManager.playVoice(mn_fruitId+1); // English
             Destroy(this.gameObject);
         }
     }
