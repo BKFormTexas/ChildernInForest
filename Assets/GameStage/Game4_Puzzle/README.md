@@ -38,5 +38,3 @@
 ***
 
 -------------
-## README.md Change history
-> ##### *2021.7.27 Lee Yun-kyo create*
