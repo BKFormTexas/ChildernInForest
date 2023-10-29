@@ -1,27 +1,26 @@
 /*
- * - Name : InitializeStage.cs
- * - Writer : 최대준
- * - Content : InitializeStage 클래스에서는 이름에서와 같이 씬에 필요한 Fruit 프리팹을 정해진 갯수만큼 생성하고 Fruit 프리팹의 위치를 랜덤하게 주도록 하였다.
- * - Where the code is applied : /Asset/fruit_putin/Scenes/put_fruits_scene -> StageControl
+ * - Name: InitializeStage.cs
+ * - Content: The InitializeStage class is responsible for generating a predefined number of Fruit prefabs in random positions and keeping track of the count. It also handles transitioning to the end scene when the player successfully puts all fruits in the basket.
+ * - Where the code is applied: /Assets/fruit_putin/Scenes/put_fruits_scene -> StageControl
  * - History -
- * 2021-07-19 : 제작 완료
- * 2021-07-20 : 주석 처리
- * 2021-07-27 : 피드백에 의한 주석 변경.
+ * 2021-07-19: Production completed
+ * 2021-07-20: Commented
+ * 2021-07-27: Updated comments based on feedback.
  *
- * - InitializeStage Member Variable 
+ * - InitializeStage Member Variables 
  *
- * mg_instanceFruit : 이 클래스를 이용하여 Fruit 프리팹에 맞는 음성을 출력할 수 있게 된다.
- * mn_countFruits : Fruit 프리팹의 종류를 나타내주는 id 변수이다.
- * msa_changeSpritesImg : Fruit 프리팹이 처음 생성된 위치를 저장하는 변수이다.
- * mb_stopUpdating : Fruit 프리팹이 드래그중인지 아닌지를 판단하는 변수이다.
- * mt_putFruitSize : 현재 씬에 바구니에 담기지 않은 과일의 개수를 나타내는 변수이다.
- * mlg_fruitList : 씬에 생성된 과일의 오브젝트 정보를 리스트형태로 가지고 있는 리스트 오브젝트이다.
+ * mg_instanceFruit: This allows controlling the VoiceManager to play the appropriate voice for Fruit prefabs.
+ * mn_countFruits: An ID variable representing the type of Fruit prefabs.
+ * msa_changeSpritesImg: Stores the initial positions of Fruit prefabs.
+ * mb_stopUpdating: A variable to determine if Fruit prefabs are being dragged.
+ * mt_putFruitSize: A variable representing the number of fruits not yet placed in the basket in the current scene.
+ * mlg_fruitList: A list object that holds information about objects of fruits created in the scene.
  * 
- * - InitializeStage Member Function
+ * - InitializeStage Member Functions
  *
- * Start() : 이 빈 게임 오브젝트가 생성될 때, Fruit 프리팹을 정해진 개수 (mn_countFruits) 만큼 랜덤한 위치에 생성하도록 하였다.
- * Update() : 오브젝트가 씬에 생성되면 계속 호출되는 함수로, 생성된 Fruit 프리팹의 개수를 세어 UI에 개수를 표시하도록 한다.
- * v_changeEndingScene() : 플레이어가 씬에 있는 모든 과일을 바구니에 넣었다면, 게임이 종료되며 준비해 놓은 end_scene으로 넘어가도록 하였다.
+ * Start(): When this empty game object is created, it generates Fruit prefabs at random positions a specified number of times (mn_countFruits).
+ * Update(): Continuously counts the number of created Fruit prefabs and displays it on the UI.
+ * v_changeEndingScene(): If the player has put all fruits in the basket, the game ends, and it transitions to a prepared end_scene.
  * 
  */
 
@@ -31,7 +30,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// 본 클래스는 과일 넣기 스테이지에 과일을 생성하고 랜덤한 위치로 보내는 역할, 과일의 개수를 세어 ui에 출력해주는 역할을 하는 클래스이다.
+// This class generates fruits and randomly positions them for the PutFruits stage, counts the number of fruits, and updates the UI.
 public class InitializeStage : MonoBehaviour {
     public GameObject mg_instanceFruit;
     public int mn_countFruits = 10;
@@ -40,15 +39,14 @@ public class InitializeStage : MonoBehaviour {
     private TextMesh mtm_putFruitSize;
     private List<GameObject> mlg_fruitList = new List<GameObject>();
 
-    // When fruitPutIn stage start, random initializing position of fruits.
+    // When the fruitPutIn stage starts, randomly initialize the positions of fruits.
     void Start() {
         mtm_putFruitSize = GameObject.Find("PutFruitsSize").GetComponent<TextMesh>() as TextMesh;
         mtm_putFruitSize.text = mn_countFruits.ToString();
 
         for (int i = 0; i < mn_countFruits; i++) {
             GameObject fruit = Instantiate(mg_instanceFruit);
-            fruit.transform.position = new Vector2(Random.Range(-8f, 8f),
-                Random.Range(-4f, 4f));
+            fruit.transform.position = new Vector2(Random.Range(-8f, 8f), Random.Range(-4f, 4f));
             int tempNum = Random.Range(0, 5);
             fruit.GetComponent<SpriteRenderer>().sprite = msa_changeSpritesImg[tempNum];
             ControlFruit temp = fruit.GetComponent(typeof(ControlFruit)) as ControlFruit;
@@ -57,11 +55,11 @@ public class InitializeStage : MonoBehaviour {
         }
     }
 
-    // check size of fruits... and update number of text object to n_countFruits...
+    // Check the size of fruits and update the number displayed on the text object to mn_countFruits.
     void Update() {
         int n_countFruits = 10;
 
-        for(int i = 0; i < mn_countFruits; i++) {
+        for (int i = 0; i < mn_countFruits; i++) {
             if (mlg_fruitList[i] == null) {
                 n_countFruits--;
             }
@@ -69,14 +67,14 @@ public class InitializeStage : MonoBehaviour {
 
         mtm_putFruitSize.text = n_countFruits.ToString();
 
-        if(n_countFruits == 0 && mb_stopUpdating) {
+        if (n_countFruits == 0 && mb_stopUpdating) {
             mb_stopUpdating = false;
-            // when the time goes 2 seconds later, call the changeEndingScene function..
+            // When 2 seconds have passed, call the v_changeEndingScene function.
             Invoke("v_changeEndingScene", 2f);
         }
     }
     
-    //when the scene is completed, change this scene to ending scene..
+    // When the scene is completed, change this scene to the ending scene.
     void v_changeEndingScene() {
         SceneManager.LoadScene("end_scene");
     }
