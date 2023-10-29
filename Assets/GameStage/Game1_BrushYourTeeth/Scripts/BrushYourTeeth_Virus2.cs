@@ -1,28 +1,27 @@
-﻿/*
- * - Name : BrushYourTeeth_Virus2.cs
- * - Writer : 김명현
- * 
- * - Content : 
- * 세균2 설정 스크립트
- * 몇번을 터치하여 죽게할 것인지 설정
- * 터치시 죽을떄 애니메이션 설정        
- *            
- * -수정 기록-
- * 2021-07-07 : 제작 완료
- * 2021-07-16 : 파일 인코딩 수정
- * 2021-07-20 : TTS 기능 추가               
- * 
- * - Variable 
- * mg_NumberOfVirusLeft : ControlUI.cs에 연결을 위한 오브젝트
- * man_OnClick : 클릭했을때 애니메이션 저장 변수
- * man_Virus2_Die : 죽었을때 애니메이션 저장 변수
- * mn_Virus2_HP : 바이러스 HP 설정 변수
- * mb_CheckFlag : 죽는 애니메이션도중 터치시 카운트 올라가는것을 방지하기 위한 flag
- * vm : 음성 TTS를 처리하는 오브젝트 연결
- * 
- * -Function()
- * OnMouseDown() : 바이러스 클릭시 작동되는 함수
- * 
+/*
+  * - Name: BrushYourTeeth_Virus2.cs
+  *
+  * - Content:
+  * Bacteria 2 setup script
+  * Set how many times to touch to kill
+  * Set animation when touching and dying
+  *
+  * -Revision History-
+  * 2021-07-07: Production completed
+  * 2021-07-16: File encoding fix
+  * 2021-07-20: TTS function added
+  *
+  * - Variable
+  * mg_NumberOfVirusLeft: Object for connection to ControlUI.cs
+  * man_OnClick: Variable for saving animation when clicked
+  * man_Virus2_Die: Animation storage variable when dying
+  * mn_Virus2_HP: Virus HP setting variable
+  * mb_CheckFlag: Flag to prevent the count from increasing when touched during a dying animation.
+  * vm: Object connection that handles voice TTS
+  *
+  * -Function()
+  * OnMouseDown(): Function that operates when a virus is clicked
+  *
  */
 
 using System;
