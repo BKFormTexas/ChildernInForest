@@ -1,66 +1,64 @@
-# 양치게임
+# Teeth brushing game
 ***
- - 작성 및 제작 : 김명현
- - 언어 : C#
+  - Language: C#
 ***
- - Update Log
-     - 21.07.06 : 코드 작성완료
-     - 21.07.08 : 엔딩씬 연결
-     - 21.07.09 : 변수명 재설정
-     - 21.07.16 : 인코딩형식 UTF8로 수정
-     - 21.07.19 : 해상도 변경에 따른 텍스트 크기 수정
-     - 21.07.20 : TTS로 세균죽을때 음성 추가
+  -Update Log
+      - 21.07.06: Code writing completed
+      - 21.07.08: Ending scene connection
+      - 21.07.09: Reset variable name
+      - 21.07.16: Modified encoding format to UTF8
+      - 21.07.19: Text size modified according to resolution change
+      - 21.07.20: Added voice when germs die through TTS
 
 ***
- - 구동화면 및 내용
+  - Running screen and contents
 
-![양치게임](https://user-images.githubusercontent.com/37494407/126113014-5b812c1d-37aa-4323-a4a3-49449a50ebe0.png)
+![Teeth brushing game](https://user-images.githubusercontent.com/37494407/126113014-5b812c1d-37aa-4323-a4a3-49449a50ebe0.png)
 
 
-    - 이빨 위치에 랜덤으로 세균이 생성되며 이를 일정 횟수 터치시 세균이 퇴치되는 게임이다.
-    - 남은 세균 수를 0으로 만들면 게임이 클리어되는 방식이다.
+     - This is a game where bacteria are randomly generated at the location of the teeth, and when you touch them a certain number of times, the bacteria are eradicated.
+     - The game is cleared when the remaining number of bacteria is reduced to 0.
     
 
 ***
 
 
-- BrushYourTeeth 구성 정보
-  - Animation
-    - Virus[1,2]_Attack.anim : 세균을 터치하였을때 작동되는 에니메이션
-    - Virus[1,2]_Die.anim : 세균 죽었을때 에니메이션
-    - Virus[1,2]_Idle.anim : 평상시 에니메이션
-    - Virus1_Prefab.controller : 세균1 에니메이션 동작 연결
-    - Virus2.controller : 세균2 에니메이션 동작 연결
-  - Image
-    - 씬에 사용되는 이미지들 저장
-  - Scripts
-    - BrushYourTeeth_Virus[1,2].cs : 세균설정 관련 스크립트
-    - BrushYourTeeth_Virus[1,2]Generator.cs : 세균 생성 스크립트
-    - BrushYourTeeth_ControlUI.cs : 안내 UI 설정 스크립트
-  - clean_teeth_scene.unity : 씬 파일
+- BrushYourTeeth Configuration Information
+   -Animation
+     - Virus[1,2]_Attack.anim: Animation that operates when touching a germ.
+     - Virus[1,2]_Die.anim: Animation when a germ dies.
+     - Virus[1,2]_Idle.anim: Normal animation
+     - Virus1_Prefab.controller: Virus1 animation operation connection
+     - Virus2.controller: Virus2 animation operation connection
+   -Image
+     - Save images used in the scene
+   -Scripts
+     - BrushYourTeeth_Virus[1,2].cs: Script related to germ settings
+     - BrushYourTeeth_Virus[1,2]Generator.cs: Germ generation script
+     - BrushYourTeeth_ControlUI.cs: Guide UI setup script
+   - clean_teeth_scene.unity: Scene file
 
 ***
 
- - 참고사항
+  - Note
 
-   - ※주의 : 총 남은 세균 수를 감소 시킨 경우 따로 각 세균의 생성 개수를 변경해 줘야된다.
+    - ※Caution: If the total number of remaining bacteria is reduced, the number of each bacteria generated must be changed separately.
 
 
-1. 남은 세균 수를 감소하고 싶은경우
+1. If you want to reduce the number of remaining bacteria
 
-    - BrushYourTeeth_ControlUI.cs의 mn_LeftVirus 변수 값 변경
+     - Change the value of mn_LeftVirus variable in BrushYourTeeth_ControlUI.cs
 
-2. 몇번 터치하면 세균이 퇴치될 것인지 수정하고 싶은경우
+2. If you want to change how many times you touch to eradicate bacteria
 
-    - BrushYourTeeth_Virus[1,2].cs의 mn_Virus[1,2]_HP 변수 값 변경
+     - Change the mn_Virus[1,2]_HP variable value in BrushYourTeeth_Virus[1,2].cs
 
-3. 세균의 생성주기를 변경하고 싶은경우
+3. If you want to change the bacterial production cycle
 
-    - BrushYourTeeth_Virus[1,2]Generator.cs 의 mf_span 변수 값 변경 (단위 : 초)
+     - Change the mf_span variable value in BrushYourTeeth_Virus[1,2]Generator.cs (unit: seconds)
 
-4. 생성되는 세균 수를 변경하고 싶은경우
+4. If you want to change the number of bacteria generated
 
-    - BrushYourTeeth_Virus[1,2]Generator.cs 의 update문 안의 if문 숫자 변경
+     - Change the if statement number in the update statement of BrushYourTeeth_Virus[1,2]Generator.cs
 
 ***
-
