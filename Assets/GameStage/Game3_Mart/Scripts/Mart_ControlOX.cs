@@ -1,67 +1,66 @@
-﻿/*
- * - Name : Mart_ControlOX.cs
- * - Writer : 김명현
+/*
+ * - Name: Mart_ControlOX.cs
+ * - Writer: Kim Myunghyun
  * 
- * - Content :
- * 정답에 따라 O 또는 X 를 보여주는 스크립트
+ * - Content: 
+ * Script to display O or X based on the answer.
  * 
- * -Update Log-
- * 2021-07-08 : 제작 완료
- * 2021-07-09 : 코드 정리
- * 2021-07-20 : 인코딩형식 수정 및 주석 수정
- * 2021-07-21 : 정답 또는 오답시 음성기능 추가
+ * - Update Log -
+ * 2021-07-08: Production completed
+ * 2021-07-09: Code cleanup
+ * 2021-07-20: Modified encoding format and updated comments
+ * 2021-07-21: Added voice functionality for correct or incorrect answers
  *                  
- * - Variable 
- * mg_O : O 프리팹을 연결해주는 변수
- * mg_X : X 프리팹을 연결해주는 변수
- * vm : TTS 오브젝트 연결을 위한 변수
+ * - Variables: 
+ * mg_O: Variable to link the O prefab
+ * mg_X: Variable to link the X prefab
+ * vm: Variable for connecting the TTS (Text-to-Speech) object
  * 
- * -Function()
- * v_ShowO() : O 를 보여주는 스크립트
- * v_ShowX() : X 를 보여주는 스크립트
+ * Functions:
+ * v_ShowO(): Function to display O
+ * v_ShowX(): Function to display X
  */
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mart_ControlOX : MonoBehaviour{
+public class Mart_ControlOX : MonoBehaviour {
     public GameObject mg_O;
     public GameObject mg_X;
     VoiceManager vm;
 
-    void Start(){
-        this.vm = GameObject.Find("VoiceManager").GetComponent<VoiceManager>();     // TTS 오브젝트 연결
+    void Start() {
+        this.vm = GameObject.Find("VoiceManager").GetComponent<VoiceManager>(); // Connect the TTS object
     }
 
-    void Update(){
-        
+    void Update() {
+
     }
 
     /// <summary>
-    /// O를 보여주는 함수
-    /// Destroy(show, n) : n 부분을 수정하여 이미지를 띄우고 삭제하는 텀을 변경할 수 있다.
+    /// Function to display O
+    /// Destroy(show, n): You can change the delay for displaying and removing the image by modifying 'n'.
     /// </summary>
-    public void v_ShowO(){
-
+    public void v_ShowO() {
         GameObject show = Instantiate(mg_O) as GameObject;
         show.transform.position = new Vector3(0, 0, 0);
-        Debug.Log("mg_O이미지 생성");
-        vm.playVoice(0);                                            // TTS 작동
-        Destroy(show, 1);                                           // 이미지를 띄우고 삭제하는 텀을 변경하고 싶으면 이 부분 수정
-        Debug.Log("mg_O이미지 삭제");
+        Debug.Log("Creating the mg_O image");
+        vm.playVoice(0); // Activate TTS
+        Destroy(show, 1); // You can change the delay for displaying and removing the image by modifying this part
+        Debug.Log("Removing the mg_O image");
     }
 
     /// <summary>
-    /// X를 보여주는 함수
-    /// Destroy(show, n) : n 부분을 수정하여 이미지를 띄우고 삭제하는 텀을 변경할 수 있다.
+    /// Function to display X
+    /// Destroy(show, n): You can change the delay for displaying and removing the image by modifying 'n'.
     /// </summary>
-    public void v_ShowX(){
+    public void v_ShowX() {
         GameObject show = Instantiate(mg_X) as GameObject;
         show.transform.position = new Vector3(0, 0, 0);
-        Debug.Log("mg_X이미지 생성");
-        vm.playVoice(1);                                            // TTS 작동
-        Destroy(show,1);                                            // 이미지를 띄우고 삭제하는 텀을 변경하고 싶으면 이 부분 수정
-        Debug.Log("mg_X이미지 삭제");
+        Debug.Log("Creating the mg_X image");
+        vm.playVoice(1); // Activate TTS
+        Destroy(show, 1); // You can change the delay for displaying and removing the image by modifying this part
+        Debug.Log("Removing the mg_X image");
     }
 }
