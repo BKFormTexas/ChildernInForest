@@ -1,20 +1,24 @@
 /*
-  * - Name : Puzzle_CheckPuzzle.cs
-  * - Writer : 이윤교
-  * - Content : 퍼즐을 다 맞췄는지 확인하고 end 씬 불러오는 스크립트
-  * 
-  * - HISTORY
-  * 2021-07-06 : 초기 개발
-  * 2021-07-16 : 파일 인코딩 수정 및 주석 처리
-  * 2021-07-27 : 주석 처리 수정
-  *
-  * <Variable>
-  * vm : 음성 TTS를 처리하는 오브젝트 연결 
-  * mb_checkVoice : 스크립트 음성이 한번만 실행되게 하기 위한 체크하는 변수
-  *
-  * <Function>
-  * v_EndStage() : end씬 불러오기
-  */
+ * - Name: Puzzle_CheckPuzzle.cs
+ * - Content: Script to check if all puzzles have been matched and load the end scene
+ * 
+ * - HISTORY
+ * 2021-07-06: Initial development
+ * 2021-07-16: Updated file encoding and added comments
+ * 2021-07-27: Modified comments
+ *
+ * <Variables>
+ * vm: Object for processing Text-to-Speech (TTS) for voice
+ * mb_checkVoice: Variable to check if the script voice has been played once
+ * mgo_RemainPuzzle: Reference to the remaining puzzle object
+ * mn_AnswerPuzzle: The number of answer puzzles expected, initialized to -1
+ * mn_CheckAnswerPuzzle: Counter for the answer puzzles that have been correctly matched, initialized to 0
+ *
+ * <Functions>
+ * v_EndStage(): Load the end scene
+ * setAnswerPuzzle(): Increment the counter for correctly matched answer puzzles
+ * Author: Lee Yoonkyo
+ */
 
 using System.Collections;
 using System.Collections.Generic;
@@ -27,26 +31,35 @@ public class Puzzle_CheckPuzzle : MonoBehaviour {
     GameObject mgo_RemainPuzzle;
     public int mn_AnswerPuzzle = -1;
     int mn_CheckAnswerPuzzle = 0;
-    //초기설정
-    void Start(){
+
+    // Initialization
+    void Start() {
         vm = GameObject.Find("VoiceManager").GetComponent<VoiceManager>();
         mgo_RemainPuzzle = GameObject.Find("ProblemWindow").gameObject;
     }
-    void Update(){
-        if(mn_AnswerPuzzle == mn_CheckAnswerPuzzle){          //퍼즐을 다 맞추면
-            if(!mb_checkVoice){                 //스크립트 음성이 한번도 나온적이 없다면
-                vm.playVoice(0);                //스크립트 음성 재생
-                mb_checkVoice = true;           //스크립트 음성 재생 체크
+
+    void Update() {
+        if (mn_AnswerPuzzle == mn_CheckAnswerPuzzle) {
+            // If all puzzles have been matched
+            if (!mb_checkVoice) {
+                // If the script voice hasn't been played yet
+                vm.playVoice(0);
+                // Play the script voice
+                mb_checkVoice = true;
+                // Mark that the script voice has been played
             }
-            Destroy(GameObject.Find("arrow"));   //arrow 오브젝트 없애기
-            Invoke("v_EndStage", 2f);           //2초 후 v_Endstage함수 호출
+            Destroy(GameObject.Find("arrow"));
+            // Remove the arrow object
+            Invoke("v_EndStage", 2f);
+            // Call the v_Endstage function after 2 seconds
         }
     }
 
     public void setAnswerPuzzle() {
         mn_CheckAnswerPuzzle++;
     }
-    //end씬 불러오는 함수
+
+    // Function to load the end scene
     void v_EndStage() {
         SceneManager.LoadScene("end_scene");
     }
