@@ -1,69 +1,76 @@
-﻿/*
- * - Name : HarpjackCollision.cs
- * - Writer : 류시온
- * - Content : 잭과콩나무 에피소드12 - 잭,하프 드래그 스크립트
+/*
+ * - Name: HarpJackCollision.cs
+ * - Content: Jack and the Beanstalk Episode 12 - Jack and Harp Drag Script
  * - History -
- * 2021-07-20 : 주석 작성.
- * 2021-07-23 : TTS 음성 출력 기능 추가.
- * 2021-07-26 : 효과음 추가 완료 (이윤교)
- * 2021-07-27 : 피드백에 의한 주석 변경.
+ * 2021-07-20: Comment added.
+ * 2021-07-23: Added TTS (Text-to-Speech) voice output functionality.
+ * 2021-07-26: Added sound effects (by Lee Yunkyo).
+ * 2021-07-27: Comment modifications based on feedback.
  *
- * - HarpjackCollision Member variable 
- * 
- * GameObject mg_talk_Prefab : 말풍선 오브젝트를 저장하는 변수이다.
- * bool mb_playOnce = false : 음성이 한번만 출력하도록 체크하는 변수이다.
- * VoiceManager mvm_playVoice : 음성을 준비하고 출력하는 클래스이다.
+ * - HarpJackCollision Member Variables
  *
- * - HarpjackCollision Member function 
+ * GameObject mg_talk_Prefab: Variable to store the speech bubble object.
+ * bool mb_playOnce = false: Variable to check if the voice should be played only once.
+ * VoiceManager mvm_playVoice: Class for preparing and outputting voice.
+ * AudioSource HarpSound: Audio source for harp sound effect.
  *
- * OnTriggerEnter2D(Collider2D cCollideObject) :오브젝트간 충돌이 일어날때 처음 한번만 호출되는 함수
- * OnMouseDrag() : 게임오브젝트를 마우스 드래그로 이동시키는 함수
- * Invoke("changeNextScene", 3f): 3초 뒤에 ("")해당 함수를 호출 하는 함수
- * changeNextScene() : ("") 해당 씬으로 넘어가는 함수
- * Start() : 음성을 출력하기 위해서 VoiceManager를 초기화한다.
- * Update() : 음성이 준비가 되었다면 한번만 출력하도록 한다.
+ * - HarpJackCollision Member Functions
+ *
+ * OnTriggerEnter2D(Collider2D cCollideObject): Function called once when collision occurs between objects.
+ * OnMouseDrag(): Function to move the game object by dragging with the mouse.
+ * Invoke("changeNextScene", 3f): Function to invoke the specified function ("") after 3 seconds.
+ * changeNextScene(): Function to transition to the specified scene ("").
+ * Start(): Initializes VoiceManager to output voice and sets up the harp sound effect.
+ * Update(): Ensures that the voice is played only once when ready.
+ * PlayHarp(): Function to play the harp sound effect.
  *
  */
- 
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// 하프와 잭이 충돌했을 시에 나타나는 결과를 구현한 클래스이다.
-public class HarpJackCollision: MonoBehaviour
+// Class implementing the result when the harp and Jack collide.
+public class HarpJackCollision : MonoBehaviour
 {
     public GameObject mg_talk_Prefab;
     public bool mb_playOnce = false;
     private VoiceManager mvm_playVoice;
-    private AudioSource HarpSound;// 하프 소리
+    private AudioSource HarpSound; // Harp sound
 
-    // VoiceManager 클래스 초기화.
-    void Start() {
+    // Initialize VoiceManager class.
+    void Start()
+    {
         mvm_playVoice = GameObject.Find("VoiceManager").GetComponent<VoiceManager>();
         HarpSound = GameObject.Find("HarpSound").GetComponent<AudioSource>();
     }
 
-    // VoiceManager를 통해 음성이 준비가 되었다면, 음성을 한번만 출력.
-    void Update() {
-        if(mvm_playVoice.mb_checkSceneReady && !mb_playOnce) {
+    // If voice is ready through VoiceManager, play the voice only once.
+    void Update()
+    {
+        if (mvm_playVoice.mb_checkSceneReady && !mb_playOnce)
+        {
             mvm_playVoice.playVoice(0);
             mb_playOnce = true;
         }
     }
 
-    // 하프와 잭이 충돌했을 시에, 말풍선 오브젝트를 생성하고, 3초뒤에 다음씬으로 이동하도록 하였다.
-    void OnTriggerEnter2D(Collider2D cCollideObject){
+    // When the harp and Jack collide, create a speech bubble object and transition to the next scene after 3 seconds.
+    void OnTriggerEnter2D(Collider2D cCollideObject)
+    {
         GameObject g_talk = Instantiate(mg_talk_Prefab) as GameObject;
         PlayHarp();
         Invoke("changeNextScene", 4f);
     }
 
-    void changeNextScene() {
+    void changeNextScene()
+    {
         SceneManager.LoadScene("Jack_Epi13");
     }
-    
-    void PlayHarp(){
+
+    void PlayHarp()
+    {
         HarpSound.Play();
     }
 }
