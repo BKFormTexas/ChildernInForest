@@ -1,36 +1,35 @@
-﻿/*
- * - Name : Jack3_Jack.cs
- * - Writer : 김명현
- * 
- * - Content :
- * 잭과콩나무 에피소드3 - Jack 오브젝트 스크립트
- * Jack과 콩의 객체 충돌처리를 위한 스크립트
- * 
- *  * - Update Log -
- * 2021-07-13 : 제작 완료
- * 2021-07-23 : 주석 변경
- *          
- * - Function
- * OnTriggerEnter2D(Collider2D cCollidObj)  충돌감지 함수
- * 
- */
+/*
+  * - Name: Jack3_Jack.cs
+  *
+  * - Content:
+  * Jack and the Beanstalk Episode 3 - Jack object script
+  * Script for handling object collisions between Jack and Kong
+  *
+  * * - Update Log -
+  * 2021-07-13: Production completed
+  * 2021-07-23: Comment change
+  *
+  * - Function
+  * OnTriggerEnter2D(Collider2D cCollidObj) collision detection function
+  *
+  */
 
-using System.Collections;
+using System. Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Jack3_Jack : MonoBehaviour
 {
-    /// <summary>
-    /// 오브젝트 충돌시 작동 함수
-    /// </summary>
-    /// <param name="cCollidObj">충돌한 객체</param>
-    void OnTriggerEnter2D(Collider2D cCollidObj)
-    {
-        //Debug.Log("충돌 감지");
-        if (cCollidObj.tag == "Jack3_Bean")                                                                 // Jack과 콩객체가 충돌한 경우
-        {
-            Destroy(cCollidObj.gameObject);                                                                 // 충돌한 객체 삭제
-        }
-    }
+     /// <summary>
+     /// Function to operate when object collides
+     /// </summary>
+     /// <param name="cCollidObj">Collided object</param>
+     void OnTriggerEnter2D(Collider2D cCollidObj)
+     {
+         //Debug.Log("Collision Detected");
+         if (cCollidObj.tag == "Jack3_Bean") // If Jack and the bean object collide
+         {
+             Destroy(cCollidObj.gameObject); // Delete collided object
+         }
+     }
 }
