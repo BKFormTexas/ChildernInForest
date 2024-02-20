@@ -1,87 +1,85 @@
-﻿/*
- * - Name : Jack4_MainScript.cs
- * - Writer : 김명현
- * 
- * - Content :
- * 잭과콩나무 에피소드4 - 미션 스크립트(대사) 관리 스크립트
- * 
- * - Update Log -
- * 2021-07-14 : 제작 완료
- * 2021-07-23 : 주석 변경
- * 
- * - 사용법
- * 1. ms_ScriptText 에 문장들을 입력한다.
- * 2. 구분자는 @로 해두었으니 구분자를 추가해준다.
- * 3. 로그를 통해 제대로 나뉘었는지 확인한다.
- * 4. v_NextScript()를 통해 다음 스크립트를 출력할수 있다.
- * 5. v_NoneScript()를 통해 스크립트내용을 공백으로 설정할수 있다.
- *                    
- * - Variable 
- * mg_MainScript                    스크립트를 보여주는 메인 스크립트 오브젝트
- * ms_ScriptText                    스크립트를 통으로 넣어주는 스트링
- * msa_SplitText[]                  구분자를 기준으로 여기에 나눠서 저장된다.
- * n_i                              for문용 변수
- * mn_Sequence                      스크립트 읽을 순서 변수
- * 
- * - Function
- * v_NoneScript()                   스크립트를 공백으로 설정해준다.
- * v_NextScript()                   다음 스크립트를 입력한다.
- * 
- */
+/*
+  * - Name: Jack4_MainScript.cs
+  * - Content:
+  * Jack and the Beanstalk Episode 4 - Mission script (dialogue) management script
+  *
+  * - Update Log -
+  * 2021-07-14: Production completed
+  * 2021-07-23: Comment change
+  *
+  * - How to use
+  * 1. Enter sentences into ms_ScriptText.
+  * 2. The separator is @, so add the separator.
+  * 3. Check whether it has been divided properly through the log.
+  * 4. The next script can be output through v_NextScript().
+  * 5. Script contents can be set to blank through v_NoneScript().
+  *
+  * - Variable
+  * mg_MainScript Main script object showing the script
+  * ms_ScriptText A string that contains the script.
+  * msa_SplitText[] It is divided and stored here based on the delimiter.
+  * n_i variable for for statement
+  * mn_Sequence script read order variable
+  *
+  * - Function
+  * v_NoneScript() Sets the script to blank.
+  * v_NextScript() Enter the next script.
+  *
+  */
 
-using System.Collections;
+using System. Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Jack4_MissionScript : MonoBehaviour
 {
-    GameObject mg_EventScript;   //연결할 스크립트 오브젝트 선언
+     GameObject mg_EventScript; //Declaration of script object to connect
 
-    //ms_ScriptText 에 문장을 입력해주세요.
-    private string ms_ScriptText = "콩을 드래그하여 어머니한테 드리세요.@콩을 드래그하여 창밖으로 던지세요";
-    private string[] msa_SplitText;
-    private int mn_Sequence;
+     //Please enter a sentence in ms_ScriptText.
+     private string ms_ScriptText = "Drag the bean and give it to your mother.@Drag the bean and throw it out the window";
+     private string[] msa_SplitText;
+     private int mn_Sequence;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.mg_EventScript = GameObject.Find("MainScript");   //스크립트 오브젝트 연결
+     // Start is called before the first frame update
+     void Start()
+     {
+         this.mg_EventScript = GameObject.Find("MainScript"); //Script object connection
 
-        //문자열을 구분자를 기준으로 나누고 제대로 나뉘었는지 확인한다.
-        msa_SplitText = ms_ScriptText.Split('@');   //구분자를 수정할려면 이 부분을 수정
-        for (int n_i = 0; n_i < msa_SplitText.Length; n_i++)
-        {
-            Debug.Log("미션 스크립트[" + n_i + "] : " + msa_SplitText[n_i]);
-        }
-        mn_Sequence = -1;
-    }
+         //Split the string based on the delimiter and check whether it is divided properly.
+         msa_SplitText = ms_ScriptText.Split('@'); //If you want to edit the delimiter, edit this part
+         for (int n_i = 0; n_i < msa_SplitText.Length; n_i++)
+         {
+             Debug.Log("Mission Script[" + n_i + "] : " + msa_SplitText[n_i]);
+         }
+         mn_Sequence = -1;
+     }
 
-    #region 함수 선언부
-    /// <summary>
-    /// 스크립트 내용을 공백으로 해주는 함수
-    /// </summary>
-    public void v_NoneScript()
-    {
-        this.mg_EventScript.GetComponent<Text>().text = "";
-    }
+     #region function declaration
+     /// <summary>
+     /// Function that leaves the script contents blank
+     /// </summary>
+     public void v_NoneScript()
+     {
+         this.mg_EventScript.GetComponent<Text>().text = "";
+     }
 
-    /// <summary>
-    /// 다음 스크립트 내용을 출력해주는 함수
-    /// </summary>
-    public void v_NextScript()
-    {
-        mn_Sequence += 1;
-        if (mn_Sequence < msa_SplitText.Length)
-        {
-            this.mg_EventScript.GetComponent<Text>().text = msa_SplitText[mn_Sequence];
-        }
-        else if (mn_Sequence >= msa_SplitText.Length)
-        {
-            Debug.Log("미션 스크립트 현재순서 : " + mn_Sequence);
-            Debug.Log("미션 스크립트 최대 값 : " + msa_SplitText.Length);
-            Debug.Log("미션 스크립트 크기 초과");
-        }
-    }
-    #endregion
+     /// <summary>
+     /// Function that outputs the following script contents
+     /// </summary>
+     public void v_NextScript()
+     {
+         mn_Sequence += 1;
+         if (mn_Sequence < msa_SplitText.Length)
+         {
+             this.mg_EventScript.GetComponent<Text>().text = msa_SplitText[mn_Sequence];
+         }
+         else if (mn_Sequence >= msa_SplitText.Length)
+         {
+             Debug.Log("Mission script current sequence: " + mn_Sequence);
+             Debug.Log("Mission script maximum value: " + msa_SplitText.Length);
+             Debug.Log("Mission script size exceeded");
+         }
+     }
+     #endregion
 }
