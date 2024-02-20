@@ -1,7 +1,5 @@
 /*
   * - Name: Jack4_MouseDrag.cs
-  * - Writer: Myeonghyun Kim
-  *
   * - Content
   * Jack and the Beanstalk Episode 4 - Mouse event script
   * Modify the object so that it moves when the mouse is dragged.
