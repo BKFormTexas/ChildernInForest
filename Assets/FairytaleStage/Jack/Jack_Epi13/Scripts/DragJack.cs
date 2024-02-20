@@ -1,18 +1,17 @@
 /*
- * - Name : Movement_Giant.cs
- * - Writer : 이윤교
- * - Content : 잭과콩나무 에피소드13 - 거인을 피하기 위해 잭을 문으로 드래그하는 스크립트
- * 
- * - HISTORY
- * 2021-07-14 : 초기 개발
- * 2021-07-16 : 파일 인코딩 수정 및 주석 처리
- * 2021-07-27 : 주석 처리 수정
- *
- * <Function>
- * OnTriggerEnter2D(Collider2D cCollideObject) : 오브젝트간 충돌이 일어날때 처음 한번만 호출되는 함수
- * OnMouseDrag() : 게임오브젝트를 드래그로 이동시키는 함수
- *           
- */
+  * - Name: Movement_Giant.cs
+  * - Content: Jack and the Beanstalk Episode 13 - Script to drag Jack to the door to avoid the giant
+  *
+  * - HISTORY
+  * 2021-07-14: Initial development
+  * 2021-07-16: Fixed file encoding and commented out
+  * 2021-07-27: Fix comment processing
+  *
+  * <Function>
+  * OnTriggerEnter2D(Collider2D cCollideObject): A function that is called only once for the first time when a collision occurs between objects.
+  * OnMouseDrag(): Function to move a game object by dragging
+  *
+  */
 
 using System;
 using System.Collections;
@@ -21,20 +20,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-//거인을 피하기 위해 잭을 문으로 드래그하는 함수
-public class DragJack : MonoBehaviour{
-    //오브젝트간 충돌이 일어날때 처음 한번만 호출되는 함수
-    void OnTriggerEnter2D(Collider2D cCollideObject){
-        if(cCollideObject.tag == "Jack"){                // 충돌 오브젝트의 태그가 잭이면 
-            OnMouseDrag();                               // Jack을 드래그가능하게 함
+// Function to drag Jack to the door to avoid the giant
+public class DragJack : MonoBehaviour
+{
+    // Function called once when collision occurs between objects
+    void OnTriggerEnter2D(Collider2D cCollideObject)
+    {
+        if (cCollideObject.tag == "Jack")
+        {
+            // If the collision object's tag is Jack
+            OnMouseDrag(); // Enable dragging for Jack
         }
-        else if(cCollideObject.tag == "Door"){          //충돌 오브젝트의 태그가 문이면
-            SceneManager.LoadScene("Jack_Epi14");       //다음 씬 Epi14으로 이동
+        else if (cCollideObject.tag == "Door")
+        {
+            // If the collision object's tag is Door
+            SceneManager.LoadScene("Jack_Epi14"); // Move to the next scene Epi14
         }
     }
 
-    //게임오브젝트를 드래그로 이동시키는 함수
-    void OnMouseDrag(){
+    // Function to move the game object by dragging
+    void OnMouseDrag()
+    {
         Vector2 v2mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         Vector2 v2worldObjPos = Camera.main.ScreenToWorldPoint(v2mousePosition);
         this.transform.position = v2worldObjPos;
