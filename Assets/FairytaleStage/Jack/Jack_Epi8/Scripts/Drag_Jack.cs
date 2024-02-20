@@ -1,76 +1,75 @@
 /*
- * - Name : Drag_Jack.cs
- * - Writer : 이윤교
- * - Content : 잭과콩나무 에피소드8 - 거인을 피해 옷장 뒤로 잭을 숨기기 위한 잭 드래그하는 스크립트
- * 
- * - HISTORY
- * 2021-07-14 : 초기 개발
- * 2021-07-16 : 파일 인코딩 수정 및 주석 처리
- * 2021-07-22 : TTS 기능 추가
- * 2021-07-27 : 주석 처리 수정
- * 2021-07-29 : 버그 수정
- *
- * <Variable>
- * mg_Jack : 잭 오브젝트
- * sc : 동화 스크립트 나타내기 위한 오브젝트
- * vm : 음성 TTS를 처리하는 오브젝트 연결
- * DragFlag : Drag 처리
- *
- * <Function>
- * OnTriggerEnter2D(Collider2D cCollideObject) : 오브젝트간 충돌이 일어날때 처음 한번만 호출되는 함수
- * OnMouseDrag() : 게임오브젝트를 드래그로 이동시키는 함수
- * ChangeDragFlagTrue() : 드래그 허용 함수
- * gotoEpi9Scene() : Epi9로 씬 이동을 위한 함수
- */
+  * - Name: Drag_Jack.cs
+  * - Content: Jack and the Beanstalk Episode 8 - Jack-drag script to hide Jack behind the closet to avoid the giant.
+  *
+  * - HISTORY
+  * 2021-07-14: Initial development
+  * 2021-07-16: Fixed file encoding and commented out
+  * 2021-07-22: TTS function added
+  * 2021-07-27: Fix comment processing
+  * 2021-07-29: Bug fix
+  *
+  * <Variable>
+  * mg_Jack: Jack object
+  * sc: Object to represent fairy tale script
+  * vm: Object connection that handles voice TTS
+  * DragFlag: Drag handling
+  *
+  * <Function>
+  * OnTriggerEnter2D(Collider2D cCollideObject): A function that is called only once for the first time when a collision occurs between objects.
+  * OnMouseDrag(): Function to move a game object by dragging
+  * ChangeDragFlagTrue(): Drag-allowing function
+  * gotoEpi9Scene(): Function for moving the scene to Epi9
+  */
 
-using System.Collections;
+using System. Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//거인을 피해 옷장 뒤로 잭을 숨기기 위한 잭 드래그하는 클래스
-public class Drag_Jack : MonoBehaviour{   
-    public GameObject mg_Jack;
-    public ScriptControl sc;
-    VoiceManager vm;
-    bool DragFlag = false;
+//Jack dragging class to hide Jack behind the closet to avoid the giant
+public class Drag_Jack: MonoBehaviour{
+     public GameObject mg_Jack;
+     public ScriptControl sc;
+     VoiceManager vm;
+     bool DragFlag = false;
 
-    //초기설정
-    void Start(){
-        sc = ScriptControl.GetInstance();                                          // ScriptControl에서 Instance 리턴 받아 사용
-        this.vm = GameObject.Find("VoiceManager").GetComponent<VoiceManager>();
-    }
+     //Initial settings
+     void Start(){
+         sc = ScriptControl.GetInstance(); // Receive and use Instance return from ScriptControl
+         this.vm = GameObject.Find("VoiceManager").GetComponent<VoiceManager>();
+     }
 
-    //오브젝트간 충돌이 일어날때 처음 한번만 호출되는 함수
-    void OnTriggerEnter2D(Collider2D cCollideObject){                               //오브젝트간 충돌이 일어나면
-        if(cCollideObject.tag == "Closet"){                                         //Jack이 옷장 뒤에 숨으면
-            sc.setNextScript();                                                     //다음 스크립트 제시
-            vm.playVoice(1);                                                        //다음 스크립트에 해당하는 tts 실행
-            Destroy(this.gameObject);                                               //잭 없애기
-            Destroy(GameObject.Find("Click").gameObject);                           //미션 화살표 없애기 
-        }
-        if(!vm.isPlaying()) {                                                       //tts재생이 끝나면
-            Invoke("gotoEpi9Scene", 5f);                                            //5초 후 gotoEpi9Scene 함수 수행 
-        }
-    }
+     //Function called only once for the first time when a collision occurs between objects
+     void OnTriggerEnter2D(Collider2D cCollideObject){ //If a collision occurs between objects
+         if(cCollideObject.tag == "Closet"){ //If Jack hides behind the closet
+             sc.setNextScript(); //present next script
+             vm.playVoice(1); //Run tts corresponding to the following script
+             Destroy(this.gameObject); //Get rid of Jack
+             Destroy(GameObject.Find("Click").gameObject); //Remove mission arrow
+         }
+         if(!vm.isPlaying()) { //When tts is finished playing
+             Invoke("gotoEpi9Scene", 5f); //Perform gotoEpi9Scene function after 5 seconds
+         }
+     }
 
-    //게임오브젝트를 드래그로 이동시키는 함수
-    void OnMouseDrag(){
-        if(DragFlag == true){                                                       //드래그 허용이 승인되면
-            Vector2 v2mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            Vector2 v2worldObjPos = Camera.main.ScreenToWorldPoint(v2mousePosition);
-            mg_Jack.transform.position = v2worldObjPos;
-        }
-    }
+     //Function to move a game object by dragging
+     void OnMouseDrag(){
+         if(DragFlag == true){ //If drag is allowed
+             Vector2 v2mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+             Vector2 v2worldObjPos = Camera.main.ScreenToWorldPoint(v2mousePosition);
+             mg_Jack.transform.position = v2worldObjPos;
+         }
+     }
 
-    //Epi9로 씬 이동을 위한 함수
-    void gotoEpi9Scene() {
-        SceneManager.LoadScene("Jack_Epi9");                                        //Jack_Epi9 씬 로드
-    }
+     //Function for moving scene to Epi9
+     void gotoEpi9Scene() {
+         SceneManager.LoadScene("Jack_Epi9"); //Load Jack_Epi9 scene
+     }
 
-    //드래그 허용 함수
-    public void ChangeDragFlagTrue(){
-        DragFlag = true;
-    }
+     //Drag allow function
+     public void ChangeDragFlagTrue(){
+         DragFlag = true;
+     }
 
 }
