@@ -1,38 +1,37 @@
-﻿/*
- * - Name : Jack3_GFScript.cs
- * - Writer : 김명현
- * 
- * - Content :
- * 잭과콩나무 에피소드3 - 할아버지 오브젝트 스크립트
- * 할아버지와 소의 객체 충돌처리를 위한 스크립트
- * 
- *  * - Update Log -
- * 2021-07-13 : 제작 완료
- * 2021-07-23 : 주석 변경
- *          
- * - Variable
- * 
- * - Function
- * OnTriggerEnter2D(Collider2D cCollidObj)  충돌감지 함수
- * 
- */
+/*
+  * - Name: Jack3_GFScript.cs
+  *
+  * - Content:
+  * Jack and the Beanstalk Episode 3 - Grandpa Object Script
+  * Script for object collision handling between grandfather and cow
+  *
+  * * - Update Log -
+  * 2021-07-13: Production completed
+  * 2021-07-23: Comment change
+  *
+  * - Variable
+  *
+  * - Function
+  * OnTriggerEnter2D(Collider2D cCollidObj) collision detection function
+  *
+  */
 
-using System.Collections;
+using System. Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Jack3_GrandFather : MonoBehaviour
+public class Jack3_GrandFather: MonoBehaviour
 {
-    /// <summary>
-    /// 오브젝트 충돌시 작동 함수
-    /// </summary>
-    /// <param name="cCollidObj">충돌한 객체</param>
-    void OnTriggerEnter2D(Collider2D cCollidObj)
-    {
-        //Debug.Log("충돌 감지");
-        if (cCollidObj.tag == "Jack3_Cow")                                                              // 할아버지객체와 소객체가 충돌한 경우
-        {
-            Destroy(cCollidObj.gameObject);                                                             // 충돌한 객체 삭제
-        }
-    }
+     /// <summary>
+     /// Function to operate when object collides
+     /// </summary>
+     /// <param name="cCollidObj">Collided object</param>
+     void OnTriggerEnter2D(Collider2D cCollidObj)
+     {
+         //Debug.Log("Collision Detected");
+         if (cCollidObj.tag == "Jack3_Cow") // When the grandfather object and the minor object collide
+         {
+             Destroy(cCollidObj.gameObject); // Delete collided object
+         }
+     }
 }
