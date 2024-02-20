@@ -1,6 +1,5 @@
 /*
   * - Name: DragCharacters.cs
-  * - Writer: Ryu Shi-on
   * - Content: Jack and the Beanstalk Episode 2 - Jack and Cow drag script
   * - History -
   * 2021-07-20: Created
