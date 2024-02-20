@@ -1,7 +1,6 @@
 /*
   * - Name: Jack4_Mother.cs
-  * - Writer: Myeonghyun Kim
-  *
+
   * - Content:
   * Jack and the Beanstalk Episode 4 - Mother Object Script
   * Script for object conflict handling between mother and bean
